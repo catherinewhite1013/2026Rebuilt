@@ -20,7 +20,7 @@ public class RobotContainer {
   private final IntakeExtendSubsystem intakeExtendSubsystem = new IntakeExtendSubsystem();
   private final IntakeRollerSubsystem intakeRollerSubsystem = new IntakeRollerSubsystem();
 
-  private static CommandXboxController m_operatorController = new CommandXboxController(1);
+  private static CommandXboxController m_operatorController = new CommandXboxController(0);
 
   public RobotContainer() {
     configureBindings();
@@ -29,8 +29,9 @@ public class RobotContainer {
   private void configureBindings() {
     m_operatorController.pov(0).whileTrue(new IntakeManual(intakeExtendSubsystem, ExtendManualAction.kUP));
     m_operatorController.pov(180).whileTrue(new IntakeManual(intakeExtendSubsystem, ExtendManualAction.kDown));
-    m_operatorController.a().onTrue(new IntakeRoller(intakeRollerSubsystem)); //測試用
+    m_operatorController.a().whileTrue(new IntakeRoller(intakeRollerSubsystem)); //測試用
     m_operatorController.b().toggleOnTrue(new IntakeAuto(intakeExtendSubsystem, intakeRollerSubsystem, ExtendAutoAction.kGetBall, RollerState.kGet));
+    m_operatorController.x().toggleOnTrue(new IntakeAuto(intakeExtendSubsystem, intakeRollerSubsystem, ExtendAutoAction.kDefault, RollerState.kStop));
   }
 
   public Command getAutonomousCommand() {

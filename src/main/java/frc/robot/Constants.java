@@ -1,24 +1,23 @@
 package frc.robot;
 
-import java.security.PublicKey;
-import java.security.cert.PKIXCertPathBuilderResult;
-
 public class Constants {
     public static class IntakeConstants {
-        public static final int kEXTEND_MOTOR_ID = ;
-        public static final int kROLLER_MOTOR_ID = ;
+        public static final int kEXTEND_MOTOR_ID = 1;
+        public static final int kROLLER_MOTOR_ID = 2;
 
-        public static final double kEXTEND_FOWARD_LIMIT = ;
-        public static final double kEXTEMD_REVERSE_LIMIT = ;
+        public static final double kINTAKE_GEAR_RATIO = 4;
 
-        public static final double kP = ;   //待測試(SYSId?)
+        public static final double kEXTEND_FOWARD_LIMIT = 5;
+        public static final double kEXTEMD_REVERSE_LIMIT = 0;
+
+        public static final double kP = 4;   //turn待測試
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kIZ = 0;
         public static final double kEXTEND_MAX_OUTPUT = 0.5;
         public static final double kEXTEND_MIN_OUTPUT = -0.5;
 
-        public static final double kINTAKE_GEAR_RATIO = ;
+        
 
         public enum ExtendManualAction {
             kUP(0.4),
@@ -33,8 +32,8 @@ public class Constants {
         }
 
         public enum ExtendAutoAction {
-            kDefault(),     //待測試
-            kGetBall();
+            kDefault(0),     //待測試
+            kGetBall(4.9);
 
             public final double state;
 

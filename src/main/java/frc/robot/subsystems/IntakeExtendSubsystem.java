@@ -33,7 +33,7 @@ public class IntakeExtendSubsystem extends SubsystemBase {
         .inverted(false)    //待測試
         .idleMode(IdleMode.kBrake)
         .closedLoop
-        .pid(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kP)
+        .pid(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kD)
         .iZone(IntakeConstants.kIZ)
         .maxOutput(IntakeConstants.kEXTEND_MAX_OUTPUT)
         .minOutput(IntakeConstants.kEXTEND_MIN_OUTPUT);

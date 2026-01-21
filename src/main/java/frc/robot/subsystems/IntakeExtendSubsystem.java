@@ -6,7 +6,6 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
-
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,7 +29,8 @@ public class IntakeExtendSubsystem extends SubsystemBase {
         .reverseSoftLimit(IntakeConstants.kEXTEMD_REVERSE_LIMIT);
 
         angleConfig
-        .inverted(false)    //待測試
+        .inverted(false)//待測試
+        .smartCurrentLimit(60)
         .idleMode(IdleMode.kBrake)
         .closedLoop
         .pid(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kD)
@@ -50,7 +50,7 @@ public class IntakeExtendSubsystem extends SubsystemBase {
     }
 
     public void setExtendState(ExtendAutoAction state){
-        anglePIDcontroller.setSetpoint(state.state*IntakeConstants.kINTAKE_GEAR_RATIO, ControlType.kPosition);
+        anglePIDcontroller.setSetpoint(state.state, ControlType.kPosition);
     }
 
     @Override

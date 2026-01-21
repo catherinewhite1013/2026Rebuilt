@@ -5,17 +5,15 @@ public class Constants {
         public static final int kEXTEND_MOTOR_ID = 1;
         public static final int kROLLER_MOTOR_ID = 2;
 
-        public static final double kINTAKE_GEAR_RATIO = 4;
+        public static final double kEXTEND_FOWARD_LIMIT = 0.0;
+        public static final double kEXTEMD_REVERSE_LIMIT = 0.0;
 
-        public static final double kEXTEND_FOWARD_LIMIT = 5;
-        public static final double kEXTEMD_REVERSE_LIMIT = 0;
-
-        public static final double kP = 4;   //turn待測試
-        public static final double kI = 0;
-        public static final double kD = 0;
-        public static final double kIZ = 0;
-        public static final double kEXTEND_MAX_OUTPUT = 0.5;
-        public static final double kEXTEND_MIN_OUTPUT = -0.5;
+        public static final double kP = 0;   //待測試
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kIZ = 0.0;
+        public static final double kEXTEND_MAX_OUTPUT = 0.4;
+        public static final double kEXTEND_MIN_OUTPUT = -0.4;
 
         
 
@@ -33,7 +31,7 @@ public class Constants {
 
         public enum ExtendAutoAction {
             kDefault(0),     //待測試
-            kGetBall(4.9);
+            kGetBall(0);
 
             public final double state;
 

@@ -1,39 +1,37 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.FeedbackSensor;
-import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.SafetyConstants;
+import frc.robot.Constants.SafetyConstants.*;
 
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.IntakeConstants.ExtendAutoAction;
-import frc.robot.Constants.IntakeConstants.ExtendManualAction;
-
-public class IntakeExtendSubsystem extends SubsystemBase {
-    private final SparkMax angleMotor = new SparkMax(IntakeConstants.kEXTEND_MOTOR_ID, MotorType.kBrushless);
+public class IntakeSafetySubsystem extends SubsystemBase{
+    private final SparkMax angleMotor = new SparkMax(SafetyConstants.kEXTEND_MOTOR_ID, MotorType.kBrushless);
     private final SparkMaxConfig angleConfig = new SparkMaxConfig();
     
     private final RelativeEncoder angleRelativeEncoder = angleMotor.getEncoder();
     private final AbsoluteEncoder angleAbsoluteEncoder = angleMotor.getAbsoluteEncoder();
     private final SparkClosedLoopController anglePIDcontroller = angleMotor.getClosedLoopController();
 
-    public IntakeExtendSubsystem(){
+    public IntakeSafetySubsystem(){
 
         angleRelativeEncoder.setPosition(angleAbsoluteEncoder.getPosition());
         
         angleConfig.softLimit
         .forwardSoftLimitEnabled(true)
         .reverseSoftLimitEnabled(true)
-        .forwardSoftLimit(IntakeConstants.kEXTEND_FOWARD_LIMIT)
-        .reverseSoftLimit(IntakeConstants.kEXTEMD_REVERSE_LIMIT);
+        .forwardSoftLimit(SafetyConstants.kEXTEND_FOWARD_LIMIT)
+        .reverseSoftLimit(SafetyConstants.kEXTEMD_REVERSE_LIMIT);
 
         angleConfig
         .inverted(false)//待測試
@@ -41,10 +39,9 @@ public class IntakeExtendSubsystem extends SubsystemBase {
         .idleMode(IdleMode.kBrake)
         .closedLoop
         .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-        .pid(IntakeConstants.kP, IntakeConstants.kI, IntakeConstants.kD)
-        .iZone(IntakeConstants.kIZ)
-        .maxOutput(IntakeConstants.kEXTEND_MAX_OUTPUT)
-        .minOutput(IntakeConstants.kEXTEND_MIN_OUTPUT);
+        .pid(SafetyConstants.kP, SafetyConstants.kI, SafetyConstants.kD)
+        .maxOutput(SafetyConstants.kEXTEND_MAX_OUTPUT)
+        .minOutput(SafetyConstants.kEXTEND_MIN_OUTPUT);
 
         angleMotor.configure(angleConfig, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
     }
@@ -53,11 +50,7 @@ public class IntakeExtendSubsystem extends SubsystemBase {
         return angleAbsoluteEncoder.getPosition();
     }
 
-    public void setExtendAction(ExtendManualAction action){
-        angleMotor.set(action.rate);
-    }
-
-    public void setExtendState(ExtendAutoAction state){
+    public void setExtendState(ExtendSafetyAction state){
         anglePIDcontroller.setSetpoint(state.state, ControlType.kPosition);
     }
 
@@ -65,4 +58,5 @@ public class IntakeExtendSubsystem extends SubsystemBase {
     public void periodic(){
         SmartDashboard.putNumber("ABS EncoderPOS", getExtendPosition());
     }
+
 }

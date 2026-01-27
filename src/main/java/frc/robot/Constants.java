@@ -1,5 +1,6 @@
 package frc.robot;
 
+
 public class Constants {
     public static class IntakeConstants {
         public static final int kEXTEND_MOTOR_ID = 1;
@@ -48,6 +49,30 @@ public class Constants {
             public final double state;
 
             private RollerState(double state){
+                this.state = state;
+            }
+        }
+        
+    }
+
+    public static class SafetyConstants {
+        public static final int kEXTEND_MOTOR_ID = 0;
+
+        public static final double kP = 0.0;
+        public static final double kI = 0.0;
+        public static final double kD = 0.0;
+        public static final double kEXTEND_MAX_OUTPUT = 0.4;
+        public static final double kEXTEND_MIN_OUTPUT = -0.4;
+        public static final double kEXTEND_FOWARD_LIMIT = 0.0;
+        public static final double kEXTEMD_REVERSE_LIMIT = 0.0;
+
+        public enum ExtendSafetyAction {
+            kDefault(0),     //待測試
+            kGetBall(0);
+
+            public final double state;
+
+            private ExtendSafetyAction(double state) {
                 this.state = state;
             }
         }
